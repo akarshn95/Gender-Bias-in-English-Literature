@@ -4,7 +4,7 @@ from scipy import stats
 from filter_books import authors_c
 from filter_books import non_fiction
 
-with open('books_json_y_70.txt','r') as file:
+with open('books_json.txt','r') as file:
     books = json.load(file)
 
 books_f = {}
@@ -34,19 +34,19 @@ h1_p2 = stats.ttest_ind(male_occ_count, female_occ_count, equal_var=False)[1]/2
 h1_p3 = stats.ttest_ind(male_pro_count, female_pro_count, equal_var=False)[1]/2
 
 print("\nCharacter Count\n")
-print("Mean Male Count:", round(np.mean(male_char_count),0))
-print("Mean Female Count: ", round(np.mean(female_char_count),0))
-print("\nNull Hypothesis: Mean of Male Character Count is greater than that of Female Character Count")
+print("Mean Male Count:", round(np.mean([x for x in male_char_count if x < np.percentile(male_char_count,99)]),0))
+print("Mean Female Count: ", round(np.mean([x for x in female_char_count if x < np.percentile(female_char_count,99)]),0))
+print("\nAlternative Hypothesis: Mean of Male Character Count is greater than that of Female Character Count")
 print("p value, one-sided independent t-test: ", h1_p1)
 print("---------------------------------------------------------------")
 print("Character Occurrence Count \n")
-print("Mean Male Count: ", round(np.mean(male_occ_count),0))
-print("Mean Female Count: ", round(np.mean(female_occ_count),0))
-print("\nNull Hypothesis: Mean of Male Character Occurrence Count is greater than that of Female Character Occurrence Count")
+print("Mean Male Count: ", round(np.mean([x for x in male_occ_count if x < np.percentile(male_occ_count,99)]),0))
+print("Mean Female Count: ", round(np.mean([x for x in female_occ_count if x < np.percentile(female_occ_count,99)]),0))
+print("\nAlternative Hypothesis: Mean of Male Character Occurrence Count is greater than that of Female Character Occurrence Count")
 print("p value, one-sided independent t-test: ", h1_p2)
 print("---------------------------------------------------------------")
 print("Pronoun Count \n")
-print("Mean Male Pronoun Count: ", round(np.mean(male_pro_count),0))
-print("Mean Female Pronoun Count: ", round(np.mean(female_pro_count),0))
-print("\nNull Hypothesis: Mean of Male Pronoun Count is greater than that of Female Pronoun Count")
+print("Mean Male Pronoun Count: ", round(np.mean([x for x in male_pro_count if x < np.percentile(male_pro_count,99)]),0))
+print("Mean Female Pronoun Count: ", round(np.mean([x for x in female_pro_count if x < np.percentile(female_pro_count,99)]),0))
+print("\nAlternative Hypothesis: Mean of Male Pronoun Count is greater than that of Female Pronoun Count")
 print("p value, one-sided independent t-test: ", h1_p3, "\n")
