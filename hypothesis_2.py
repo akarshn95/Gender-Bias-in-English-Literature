@@ -4,7 +4,7 @@ from scipy import stats
 from filter_books import authors_c
 from filter_books import non_fiction
 
-with open('books_json_y_70.txt','r') as file:
+with open('books_json.txt','r') as file:
     books = json.load(file)
 
 books_f = {}
@@ -49,19 +49,42 @@ h2_p2 = stats.ttest_ind(female_occ_count_f, female_occ_count_m, equal_var=False,
 h2_p3 = stats.ttest_ind(female_pro_count_f, female_pro_count_m, equal_var=False, alternative = 'greater')[1]
 
 print("\nFemale Character Count \n")
-print("Mean in Male-Authored Books: ", round(np.mean(female_char_count_m),0))
-print("Mean in Female-Authored Books: ", round(np.mean(female_char_count_f),0))
-print("\nNull Hypothesis: Mean of Female Character Count in female-authored books is greater than that in male-authored books")
+print("Mean in Male-Authored Books: ", round(np.mean([x for x in female_char_count_m if x < np.percentile(female_char_count_m,99)]),0))
+print("Mean in Female-Authored Books: ", round(np.mean([x for x in female_char_count_f if x < np.percentile(female_char_count_f,99)]),0))
+print("\nAlternative Hypothesis: Mean of Female Character Count in female-authored books is greater than that in male-authored books")
 print("p value, one-sided independent t-test: ", h2_p1)
 print("---------------------------------------------------------------")
 print("Female Character Occurrence Count \n")
-print("Mean in Male-Authored Books: ", round(np.mean(female_occ_count_m),0))
-print("Mean in Female-Authored Books: ", round(np.mean(female_occ_count_f),0))
-print("\nNull Hypothesis: Mean of Female Character Occurrence Count in female-authored books is greater than that in male-authored books")
+print("Mean in Male-Authored Books: ", round(np.mean([x for x in female_occ_count_m if x < np.percentile(female_occ_count_m,99)]),0))
+print("Mean in Female-Authored Books: ", round(np.mean([x for x in female_occ_count_f if x < np.percentile(female_occ_count_f,99)]),0))
+print("\nAlternative Hypothesis: Mean of Female Character Occurrence Count in female-authored books is greater than that in male-authored books")
 print("p value, one-sided independent t-test: ", h2_p2)
 print("---------------------------------------------------------------")
-print("Pronoun Count \n")
-print("Mean in Male-Authored Books: ", round(np.mean(female_pro_count_m),0))
-print("Mean in Female-Authored Books: ", round(np.mean(female_pro_count_f),0))
-print("\nNull Hypothesis: Mean of Female Pronoun Count in female-authored books is greater than that in male-authored books")
+print("Female Pronoun Count \n")
+print("Mean in Male-Authored Books: ", round(np.mean([x for x in female_pro_count_m if x < np.percentile(female_pro_count_m,99)]),0))
+print("Mean in Female-Authored Books: ", round(np.mean([x for x in female_pro_count_f if x < np.percentile(female_pro_count_f,99)]),0))
+print("\nAlternative Hypothesis: Mean of Female Pronoun Count in female-authored books is greater than that in male-authored books")
 print("p value, one-sided independent t-test: ", h2_p3, "\n")
+
+h2_p4 = stats.ttest_ind(male_char_count_f, male_char_count_m, equal_var=False, alternative = 'two-sided')[1]
+h2_p5 = stats.ttest_ind(male_occ_count_f, male_occ_count_m, equal_var=False, alternative = 'two-sided')[1]
+h2_p6 = stats.ttest_ind(male_pro_count_f, male_pro_count_m, equal_var=False, alternative = 'two-sided')[1]
+
+print("*******************************************************************************************************************************\n")
+print("\nMale Character Count \n")
+print("Mean in Male-Authored Books: ", round(np.mean([x for x in male_char_count_m if x < np.percentile(male_char_count_m,99)]),0))
+print("Mean in Female-Authored Books: ", round(np.mean([x for x in male_char_count_f if x < np.percentile(male_char_count_f,99)]),0))
+print("\nNull Hypothesis: Mean of Male Character Count in female-authored books is same as that in male-authored books")
+print("p value, one-sided independent t-test: ", h2_p4)
+print("---------------------------------------------------------------")
+print("Male Character Occurrence Count \n")
+print("Mean in Male-Authored Books: ", round(np.mean([x for x in male_occ_count_f if x < np.percentile(male_occ_count_f,99)]),0))
+print("Mean in Female-Authored Books: ", round(np.mean([x for x in male_occ_count_f if x < np.percentile(male_occ_count_f,99)]),0))
+print("\nNull Hypothesis: Mean of Male Character Occurrence Count in female-authored books is same as that in male-authored books")
+print("p value, one-sided independent t-test: ", h2_p5)
+print("---------------------------------------------------------------")
+print("Male Pronoun Count \n")
+print("Mean in Male-Authored Books: ", round(np.mean([x for x in male_pro_count_m if x < np.percentile(male_pro_count_m,99)]),0))
+print("Mean in Female-Authored Books: ", round(np.mean([x for x in male_pro_count_f if x < np.percentile(male_pro_count_f,99)]),0))
+print("\nNull Hypothesis: Mean of Male Pronoun Count in female-authored books is same as that in male-authored books")
+print("p value, one-sided independent t-test: ", h2_p6, "\n")

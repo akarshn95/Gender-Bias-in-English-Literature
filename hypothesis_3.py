@@ -4,7 +4,7 @@ from scipy import stats
 from filter_books import authors_c
 from filter_books import non_fiction
 
-with open('books_json_y_70.txt','r') as file:
+with open('books_json.txt','r') as file:
     books = json.load(file)
 
 books_f = {}
@@ -60,7 +60,7 @@ year_dict = {
 
 print("\nProportion of Male Character Count\n")
 print(f"Mean in 1825: {round(np.mean(char_count[0]),2)}")
-print("Null Hypothesis: The proportion of Male Character Count to total Character Count is greater in each of the below years compared to 1825\n")
+print("Null Hypothesis: The proportion of Male Character Count to total Character Count is same in each of the below years compared to 1825\n")
 
 for i in range(1,len(char_count)):
     p = stats.ttest_ind(char_count[i], char_count[0], equal_var=False, alternative = 'greater')[1]
@@ -68,7 +68,7 @@ for i in range(1,len(char_count)):
 
 print("\nProportion of Male Character Occurrence Count\n")
 print(f"Mean in 1825: {round(np.mean(char_occ_count[0]),2)}")
-print("Null Hypothesis: The proportion of Male Character Occurrence Count to total Character Occurrence Count is greater in each of the below years compared to 1825\n")
+print("Null Hypothesis: The proportion of Male Character Occurrence Count to total Character Occurrence Count is same in each of the below years compared to 1825\n")
 
 for i in range(1,len(char_occ_count)):
     p = stats.ttest_ind(char_occ_count[i], char_occ_count[0], equal_var=False, alternative = 'greater')[1]
@@ -76,10 +76,9 @@ for i in range(1,len(char_occ_count)):
 
 print("\nProportion of Male Pronoun Count\n")
 print(f"Mean in 1825: {round(np.mean(char_pro_count[0]),2)}")
-print("Null Hypothesis: The proportion of Male Pronoun Count to total Pronoun Count is greater in each of the below years compared to 1825\n")
+print("Null Hypothesis: The proportion of Male Pronoun Count to total Pronoun Count is same in each of the below years compared to 1825\n")
 
 for i in range(1,len(char_pro_count)):
     p = stats.ttest_ind(char_pro_count[i], char_pro_count[0], equal_var=False, alternative = 'greater')[1]
     print(f"Mean in {year_dict[i]}: {round(np.mean(char_pro_count[i]),2)}; p-value: {p}")
-
 print("\n")
